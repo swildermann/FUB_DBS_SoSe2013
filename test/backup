@@ -1,0 +1,196 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+SET search_path = public, pg_catalog;
+
+ALTER TABLE ONLY public.zettel DROP CONSTRAINT zettel_pkey;
+ALTER TABLE ONLY public.test DROP CONSTRAINT test_pkey;
+ALTER TABLE public.test ALTER COLUMN id DROP DEFAULT;
+DROP TABLE public.zettel;
+DROP SEQUENCE public.zettel_id_seq;
+DROP SEQUENCE public.test_id_seq;
+DROP TABLE public.test;
+DROP EXTENSION plpgsql;
+DROP SCHEMA public;
+--
+-- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA public;
+
+
+ALTER SCHEMA public OWNER TO postgres;
+
+--
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON SCHEMA public IS 'standard public schema';
+
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: test; Type: TABLE; Schema: public; Owner: chris; Tablespace: 
+--
+
+CREATE TABLE test (
+    id integer NOT NULL,
+    text text
+);
+
+
+ALTER TABLE public.test OWNER TO chris;
+
+--
+-- Name: test_id_seq; Type: SEQUENCE; Schema: public; Owner: chris
+--
+
+CREATE SEQUENCE test_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.test_id_seq OWNER TO chris;
+
+--
+-- Name: test_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chris
+--
+
+ALTER SEQUENCE test_id_seq OWNED BY test.id;
+
+
+--
+-- Name: zettel_id_seq; Type: SEQUENCE; Schema: public; Owner: chris
+--
+
+CREATE SEQUENCE zettel_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.zettel_id_seq OWNER TO chris;
+
+--
+-- Name: zettel; Type: TABLE; Schema: public; Owner: chris; Tablespace: 
+--
+
+CREATE TABLE zettel (
+    zettel_id integer DEFAULT nextval('zettel_id_seq'::regclass) NOT NULL,
+    modul character varying(15) NOT NULL,
+    zettel_nr smallint NOT NULL,
+    abzugeben_bis date,
+    abgegeben_am date,
+    max_pkt smallint,
+    erreichte_pkt double precision
+);
+
+
+ALTER TABLE public.zettel OWNER TO chris;
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: chris
+--
+
+ALTER TABLE ONLY test ALTER COLUMN id SET DEFAULT nextval('test_id_seq'::regclass);
+
+
+--
+-- Data for Name: test; Type: TABLE DATA; Schema: public; Owner: chris
+--
+
+COPY test (id, text) FROM stdin;
+\.
+
+
+--
+-- Name: test_id_seq; Type: SEQUENCE SET; Schema: public; Owner: chris
+--
+
+SELECT pg_catalog.setval('test_id_seq', 1, false);
+
+
+--
+-- Data for Name: zettel; Type: TABLE DATA; Schema: public; Owner: chris
+--
+
+COPY zettel (zettel_id, modul, zettel_nr, abzugeben_bis, abgegeben_am, max_pkt, erreichte_pkt) FROM stdin;
+1	ALP_IV	1	2013-04-16	2013-04-16	16	15
+2	ALP_IV	2	2013-04-16	2013-04-16	16	11
+3	ALP_IV	3	2013-04-16	2013-04-16	16	10
+6	DBS	2	2013-04-16	2013-04-16	\N	0
+7	DBS	3	2013-04-16	2013-04-16	\N	0
+5	DBS	1	2013-04-16	2013-04-16	8	5.5
+8	DBS	4	2013-04-16	2013-04-16	\N	0
+4	ALP_IV	4	2013-04-16	2013-04-16	16	8
+\.
+
+
+--
+-- Name: zettel_id_seq; Type: SEQUENCE SET; Schema: public; Owner: chris
+--
+
+SELECT pg_catalog.setval('zettel_id_seq', 8, true);
+
+
+--
+-- Name: test_pkey; Type: CONSTRAINT; Schema: public; Owner: chris; Tablespace: 
+--
+
+ALTER TABLE ONLY test
+    ADD CONSTRAINT test_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: zettel_pkey; Type: CONSTRAINT; Schema: public; Owner: chris; Tablespace: 
+--
+
+ALTER TABLE ONLY zettel
+    ADD CONSTRAINT zettel_pkey PRIMARY KEY (zettel_id);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

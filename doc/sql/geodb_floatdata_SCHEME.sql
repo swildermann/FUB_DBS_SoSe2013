@@ -1,4 +1,4 @@
-REATE TABLE geodb_floatdata (
+CREATE TABLE geodb_floatdata (
     loc_id integer,
     float_type integer,
     float_val integer,

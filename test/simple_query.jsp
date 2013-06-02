@@ -20,7 +20,7 @@
 	try {
  	    Class.forName("org.postgresql.Driver");
 	    Connection conn = DriverManager.getConnection (
-	    	"jdbc:postgresql://localhost/uni",
+	    	"jdbc:postgresql://localhost/stadtwetter",
 		"jdbc", "dbs2013" );
 
             Statement stmt = conn.createStatement();

@@ -60,3 +60,10 @@ local.properties
 .cproject
 # PDT-specific
 .buildpath
+
+###############
+# LATEX
+##############
+*.aux
+*.gz
+*.log

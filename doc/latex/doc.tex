@@ -52,15 +52,18 @@
 }
 
 \subsection*{DBS SoSe 2013, Di. 8-10}
-\section*{Projektdokumentation: Iteratation No. 2}
+\section*{Projektdokumentation: Iteratation No. 3}
 \textbf{Christoph van Heteren-Frese (Matr.-Nr.: 4465677), \\ Sven Wildermann (Matr.-Nr.: 4567553) }
 \hrule
-\section*{Rahmenbedingungen}
+\section{Rahmenbedingungen}
 \begin{enumerate}
-\item[•] DBS: Postgresql
+\item[•] DBS: PostgreSQL
+\item[•]JavaServer Pages (JSP): Apache Tomcat 7
 \end{enumerate}
-\section*{Erzeugen der Relationen/Tabellen}
-
+\section{Herkunft der Daten}
+Die Daten der Städte stammen aus der frei zugänglichen Datenbank GeoDB.
+\section{Erzeugen der Relationen/Tabellen}
+Die erzeugten Relationen weichen teilweise von den in \citep{geodb.org} dokumentierten Schemata ab. 
 \subsection*{Beispiel: geodb\_intdata}
 \begin{lstlisting}[language=sql]
 CREATE TABLE geodb_intdata (
@@ -88,7 +91,7 @@ CREATE TABLE staedte (
 	lon float
 );
 \end{lstlisting}
-\section*{Datenimport}
+\section{Datenimport}
 Zeilen, die der JOIN-Bedingung nicht genügen, werden durch 'OUTER LEFT JOIN' nur dann in die Zieltabelle eingefügt, wenn keine weiteren Bedingungen dies verhindern. Letzteres ist genau  genau dann der Fall, wenn der gewünschte Texttyp im WHERE-Statement 'selektiert' wird. Daher muss dies bereits in der Joinbedingung geschehen.
 \subsection*{Beispiel: Städte-Relation}
 \begin{lstlisting}[language=sql]
@@ -116,5 +119,8 @@ INSERT INTO staedte (plz, name, vorwahl, einwohner, flaeche, amt, kz, lat, lon)
 	WHERE plz.text_type = 500300000
 		AND name.text_type = 500100000 ORDER by name, plz;
 \end{lstlisting}
+
+\bibliographystyle{agsm}
+\bibliography{dbs}
 
 \end{document}

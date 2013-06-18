@@ -1,0 +1,5 @@
+﻿select mess.datum, ws.standort, sonnenscheindauer from wettermessung mess 
+	join fuehrt_durch fd  on fd.datum = mess.datum 
+	join wetterstation ws on fd.s_id = ws.s_id 
+	join  shortest_distance sd on sd.wetterstationsid = ws.s_id
+	limit 10;

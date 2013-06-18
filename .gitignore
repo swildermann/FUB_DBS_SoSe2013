@@ -67,3 +67,12 @@ local.properties
 *.aux
 *.gz
 *.log
+*.bbl
+*.blg
+
+##############
+# FOLDER
+##############
+
+stadtwetter-app/build/
+trash/

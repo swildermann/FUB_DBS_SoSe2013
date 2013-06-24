@@ -1,12 +1,13 @@
 <%--
 Webanwendung Stadwetter
-- ermöglicht eine einfache Datenbankabfrage der StadtwetterDb
+- ermoeglicht eine einfache Datenbankabfrage der StadtwetterDb
 - genutzte Technologien: 
     - JSP (JSTL, EL) 
     - CSS, JavaScript (nur Kosmetik)
 
 - Authoren: Christoph van Heteren-Frese, Sven Wildermann
 - Erstellt in Berlin am 19.06.2013
+- dokumentierter Stand vom 24. Juni 2013
 --%>
 
 <%-- Expression language einschalten  --%>
@@ -29,7 +30,7 @@ Webanwendung Stadwetter
   <body>
     <h1>Stadtwetter Wep-App</h1>
 
-    <%-- Formularfelder für die Nutzereigabe erzeugen--%>
+    <%-- Formularfelder fuer die Nutzereigabe erzeugen--%>
     <form method="get"> 
       <h4>Bitte Auswahl treffen:</h4>
       <input type="text" name="cond" value="Plz, Ort oder Ortsteil" size=30 
@@ -62,17 +63,19 @@ Webanwendung Stadwetter
     <sql:query var="ablage"   sql="SELECT DISTINCT wm.datum, wm.sonnenscheindauer, 
                               wm.mittel_windstaerke, wm.mittel_bedeckungsgrad, 
                               wm.niederschlagshoehe, wm.mittel_2m
-                              FROM (SELECT * FROM locations WHERE name like '${param.cond}' OR  plz='${param.cond}' LIMIT 1) AS loc
-                              JOIN shortest_distance sd ON (loc.id = sd.locationid) 
+                              FROM (SELECT * FROM locations WHERE name like '${param.cond}' OR  
+							  plz='${param.cond}' LIMIT 1) AS loc
+                              JOIN shortest_distance sd ON (loc.id = sd.locationid)  
                               JOIN wetterstation ws ON (ws.s_id = sd.wetterstationsid) 
                               JOIN fuehrt_durch fd ON (ws.s_id = fd.s_id )
                               JOIN (SELECT DISTINCT * FROM wettermessung) AS wm 
-                              ON (fd.s_id = wm.stations_id) WHERE wm.datum BETWEEN '${param.date}' AND '${date2}' ORDER BY wm.datum;"/>
-	<%-- Überschrift erzeugen --%>
+                              ON (fd.s_id = wm.stations_id) WHERE wm.datum BETWEEN '${param.date}' 
+							  AND '${date2}' ORDER BY wm.datum;"/>
+	<%-- ueberschrift erzeugen --%>
     <h2>Ergebnisse f&uuml;r ${param.cond}:</h2>
 
     <%-- Konstruktion einer einfachen Tabelle inklusive Werte--%>
-	<%-- die Überschriften werden direkt aus der Datenbank geholt --%>
+	<%-- die ueberschriften werden direkt aus der Datenbank geholt --%>
 
     <c:forEach items="${ablage.rows}" var="currRow">
     <div class="CSSTableGenerator"> 

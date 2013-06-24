@@ -52,7 +52,7 @@
 }
 
 \subsection*{DBS SoSe 2013, Di. 8-10}
-\section*{Projektdokumentation: Iteratation No. 3}
+\section*{Projektdokumentation: Iteratation No. 4}
 \textbf{Christoph van Heteren-Frese (Matr.-Nr.: 4465677), \\ Sven Wildermann (Matr.-Nr.: 4567553) }
 \hrule
 \section{Rahmenbedingungen}
@@ -133,6 +133,13 @@ Die erste Funktion berechnet den Abstand zwischen zwei Koordinaten in km auf ein
 
 Die zweite Funktion iteriert die Funktion distance auf allen Städten zu allen Wetterstationen, nimmt nur den kürzesten Eintrag einer Stadt zu einer Wetterstation und fügt diesen Eintrag in die Tabelle shortestdistance hinzu. Wenn diese Berechnung für alle Datensätze erneut durchgeführt werden muss, muss zuerst geprüft werden welchen Index der letzte Datensatz in der Relation städte hat (um diesen in der Funktion bei Abweichung zu ersetzen) und die Relation shortestdistance muss vorher geleert werden. 
 \lstinputlisting[language=sql]{shortestdistance.sql}
+
+\section{Web-Anwendung}
+Die Web-Anwendung wurde in JSP realisiert. Der Zugriff auf die Datenbank, die Erstellung der Tabellen und die Verknüpfung der eingegebenen Werte mit denen in der Datenbank wird aus der Datei auf Grund konsequenter Kommentierung deutlich.  
+
+\lstinputlisting[language=html]{index.jsp}
+
+Das Design und das Verhalten der Webpage selbst wird über eine .css-Datei und eine xml-Datei bestimmt. Der Inhalt dieser Datei ist trivial und hat für diese Dokumentation keine weitere Bedeutung. 
 
 \bibliographystyle{agsm}
 \bibliography{dbs}

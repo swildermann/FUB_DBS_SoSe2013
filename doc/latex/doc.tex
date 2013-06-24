@@ -60,8 +60,13 @@
 \item[•] DBS: PostgreSQL
 \item[•]JavaServer Pages (JSP): Apache Tomcat 7
 \end{enumerate}
+\section{Modellierung}
+Wir modellieren unser Datenbankschema wie folgt: \\
+Da wir davon ausgehen, dass nicht regelmäßig neue Wetterstationen entstehen oder abgebaut werden, haben wir die Relation ``hat kürzeste Distanz zu'' gebildet. Diese muss aktualisiert werden, sobald sich die Wetterstationen ändern. Wenn eine neue Stadt (bzw. ``location'') hinzu kommt oder entfernt wird, reicht es entsprechend einen Eintrag hinzuzufügen bzw. zu entfernen. \\
+Da die Wetterdaten über einen Schlüssel eindeutig mit den Wetterstationen verknüpft sind, haben wir hier eine Relation ``führt durch''. Im Endeffekt wird hier jede Verknüpfung zwischen einer Wettermessung und einem Standort hergestellt. Aktualisieren sich die Wettermessungen, so muss auch diese Relation aktualisiert werden. \\
+\includegraphics[width=13cm, angle=270]{Diagram1.pdf}
 \section{Herkunft der Daten}
-Die Daten der Städte stammen aus der frei zugänglichen Datenbank GeoDB.
+Die Daten der Städte stammen aus der frei zugänglichen Datenbank GeoDB. Die Wetterdaten werden von der Uni Bayreuth zur Verfügung gestellt. 
 \section{Erzeugen der Relationen/Tabellen}
 Die erzeugten Relationen weichen teilweise von den in \citep{geodb.org} dokumentierten Schemata ab. 
 \subsection*{Beispiel: geodb\_intdata}
@@ -119,6 +124,17 @@ INSERT INTO staedte (plz, name, vorwahl, einwohner, flaeche, amt, kz, lat, lon)
 	WHERE plz.text_type = 500300000
 		AND name.text_type = 500100000 ORDER by name, plz;
 \end{lstlisting}
+
+\section{Berechnung der Relation ``hat kürzeste Distanz zu''}
+Für die Berechnung der Relation ``hat kürzteste Distanz zu'', die zwischen den Städten und den Wetterstationen vorliegt, 
+wurden eigene SQL-Funktionen implementiert.\\
+Die erste Funktion berechnet den Abstand zwischen zwei Koordinaten in km auf einer Kugel, so dass nicht nur die Distanz innerhalb Deutschlands korrekt berchnet wird, sondern auch die Entfernungen zwischen zwei weiter von einander entfernten Punkten. 
+\lstinputlisting[language=sql]{twopoints.sql}
+
+Die zweite Funktion iteriert die Funktion distance auf allen Städten zu allen Wetterstationen, nimmt nur den kürzesten Eintrag einer Stadt zu einer Wetterstation und fügt diesen Eintrag in die Tabelle shortestdistance hinzu. Wenn diese Berechnung für alle Datensätze erneut durchgeführt werden muss, muss zuerst geprüft werden welchen Index der letzte Datensatz in der Relation städte hat (um diesen in der Funktion bei Abweichung zu ersetzen) und die Relation shortestdistance muss vorher geleert werden. 
+\lstinputlisting[language=sql]{shortestdistance.sql}
+
+\section{Web-Anwendung}
 
 \bibliographystyle{agsm}
 \bibliography{dbs}

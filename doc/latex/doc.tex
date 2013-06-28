@@ -140,7 +140,27 @@ Die Web-Anwendung wurde in JSP realisiert. Der Zugriff auf die Datenbank, die Er
 \lstinputlisting[language=html]{index.jsp}
 
 Das Design und das Verhalten der Webpage selbst wird über eine .css-Datei und eine xml-Datei bestimmt. Der Inhalt dieser Datei ist an sich trivial und hat für diese Dokumentation keine weitere Bedeutung. 
+\begin{center}
+\begin{figure}[H]
+\includegraphics[scale=0.4]{Web-App_1}
+\caption{\textbf{Web-App vor der Benutzereingabe:} Es kann nach einem Ort, einem Stadtteil, oder einer Postleitzahl gesucht werden. Das Wetter lässt sich entweder für ein bestimmtes Datum, oder für einen Zeitraum anzeigen. Des Weiteren kann zwischen einer einfachen und einer detailierten Ansicht gewählt werden.}
+\end{figure}
+\begin{figure}[H]
+\includegraphics[scale=0.4]{Web-App_2}
+\caption{\textbf{Web-App nach einer Benutzereingabe:} Es wurde nach dem Wetter für den Berliner Stadtteil Tiergarten im Zeitraum 01.05.2013 bis 07.05.2013 gesucht.}
+\end{figure}
+\begin{figure}[H]
+\includegraphics[scale=0.4]{Web-App_3}
+\caption{\textbf{Ergebnisse der Abfrage:} Die Web-App bereitet die Datensätze auf und zeigt die Ergebnisse in Tabellarischer Form an.}
+\end{figure}
+\end{center}
 
+\section{Datamining mit Weka}
+Es wurden nur die Daten der Wetterstation Berlin-Tegel betrachtet. Die für die Analyse benötigten Daten wurden über die integrierte Datenbankschnittelle des Weka Explorers importiert (Details zum Setup sind in \cite{weka.data} zu finden). Die entsprechende SQL-Abfrage dafür lautet:
+\begin{lstlisting}[language=sql]
+select * from wettermessung where stations_id=10382;
+\end{lstlisting}
+Mit Hilfe von Filtern wurde die so erzeugte Datenbasis aufbereitet (z.B. numerische Werte in nominale konvertiert) und anschließend mit dem Naive Beyes sowie dem J48 Algorithmus analysiert.
 \bibliographystyle{agsm}
 \bibliography{dbs}
 

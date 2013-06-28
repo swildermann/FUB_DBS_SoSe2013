@@ -9,7 +9,7 @@ Webanwendung Stadwetter
 - Erstellt in Berlin am 19.06.2013
 --%>
 
-<%-- Expression language einschalten (TODO: wieso ist das nötig?) --%>
+<%-- Expression language einschalten  --%>
 <%@ page isELIgnored="false" %>
 
 <%-- JSTL einbinden --%>
@@ -22,13 +22,14 @@ Webanwendung Stadwetter
 <!DOCTYPE html>
 <html>
   <head>
+	<%-- Design und Titel einbinden --%>
     <link href="design.css" type="text/css" rel="stylesheet">
     <title>DBS 2013 Stadtwetter Web-App</title>
   </head>
   <body>
     <h1>Stadtwetter Wep-App</h1>
 
-    <%-- Formularfelder für die Nutzereigabe--%>
+    <%-- Formularfelder für die Nutzereigabe erzeugen--%>
     <form method="get"> 
       <h4>Bitte Auswahl treffen:</h4>
       <input type="text" name="cond" value="Plz, Ort oder Ortsteil" size=30 
@@ -67,10 +68,12 @@ Webanwendung Stadwetter
                               JOIN fuehrt_durch fd ON (ws.s_id = fd.s_id )
                               JOIN (SELECT DISTINCT * FROM wettermessung) AS wm 
                               ON (fd.s_id = wm.stations_id) WHERE wm.datum BETWEEN '${param.date}' AND '${date2}' ORDER BY wm.datum;"/>
-
+	<%-- Überschrift erzeugen --%>
     <h2>Ergebnisse f&uuml;r ${param.cond}:</h2>
 
-    <%-- Konstruktion einer einfachen Tabelle --%>
+    <%-- Konstruktion einer einfachen Tabelle inklusive Werte--%>
+	<%-- die Überschriften werden direkt aus der Datenbank geholt --%>
+
     <c:forEach items="${ablage.rows}" var="currRow">
     <div class="CSSTableGenerator"> 
       <table cellspacing="0" cellpadding="0" >
